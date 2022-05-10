@@ -9,4 +9,5 @@ __pycache__
 .env
 logs
 uploads
-database
+.DS_Store
+app/.DS_Store
