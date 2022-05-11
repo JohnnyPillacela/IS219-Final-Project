@@ -7,6 +7,25 @@
     {% block title %}Welcome: {{ current_user.email }}{% endblock %}
     {% block content %}
         <h2>Welcome: {{ current_user.email }}</h2>
+        <div class="container" style="text-align: center;">
+            <h4>
+                Our Dealership Locations
+            </h4>
+            <div class="row" style="margin: 20px auto; text-align: center">
+                <div class="col">
+                    <h5>
+                        View our Inventory
+                    </h5>
+                    <a class="btn btn-primary" role="btn" href="/view_inventory">Our Inventory</a>
+                </div>
+                <div class="col">
+                    <h5>
+                        View our Dealership Locations
+                    </h5>
+                    <a class="btn btn-secondary" role="btn" href="/locations/map">Our Locations</a>
+                </div>
+            </div>
+        </div>
         {{ render_table(data) }}
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -31,8 +50,6 @@
                 );
             });
         </script>
-
-
 
     {% endblock %}
 </div>

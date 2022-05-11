@@ -11,10 +11,14 @@
     {% from 'bootstrap5/table.html' import render_table %}
 
     <div class="row">
-        <article class="col-12">
+        <div class="col-8">
             <h1>Welcome</h1>
             <h4>Cars available in our dealership</h4>
-        </article>
+        </div>
+        <div class="col-4">
+            <h4><b>Sell us your Car!</b></h4>
+            <a class="btn btn-primary" role="button" href="/car/new">Sell Car</a>
+        </div>
 
         {% for car in data %}
             <div class="card" style="width: 18rem;">
