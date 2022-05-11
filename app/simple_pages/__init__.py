@@ -46,7 +46,7 @@ def browse_products():
 
     current_app.logger.info("Browse page loading")
 
-    return render_template('welcome.html',
+    return render_template('list_items.html',
                            data=data,
                            Products=products,
                            add_url=add_url,
