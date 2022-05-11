@@ -231,3 +231,4 @@ def test_deleting_car(application):
         car = Cars.query.filter_by(car_maker='Ford').first()
         # asserting that the car_maker retrieved is correct
         assert car.car_maker == "Ford"
+
