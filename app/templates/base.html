@@ -48,10 +48,10 @@
                         {% endif %}
                         {{ render_nav_item('map.map_locations','Dealerships' ) }}
                         {{ render_nav_item('simple_pages.about','About') }}
-                        {{ render_nav_item('simple_pages.view_products','View Shop') }}
-                        {% if current_user.is_admin %}
-                            {{ render_nav_item('simple_pages.browse_products','List Items') }}
-                        {% endif %}
+{#                        {{ render_nav_item('simple_pages.view_products','View Shop') }}#}
+{#                        {% if current_user.is_admin %}#}
+{#                            {{ render_nav_item('simple_pages.browse_products','List Items') }}#}
+{#                        {% endif %}#}
                         {{ render_nav_item('cars.browse_cars','View Inventory') }}
                         {% if current_user.is_admin %}
                             {{ render_nav_item('cars.list_cars','Cars List') }}

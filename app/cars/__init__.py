@@ -13,8 +13,6 @@ cars = Blueprint('cars', __name__,
 
 
 @cars.route('/view_inventory')
-@login_required
-@admin_required
 def browse_cars():
     data = Cars.query.all()
     titles = [('Product id', 'id')]
