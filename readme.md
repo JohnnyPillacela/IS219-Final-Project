@@ -3,7 +3,7 @@
 [![Production Workflow](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/prod.yml/badge.svg?branch=master)](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/prod.yml)
 * [Production Deployment](https://is219-final-project.herokuapp.com/)
 
-[![Production Workflow](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml/badge.svg?branch=master)](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml)
+[![Development Workflow](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml/badge.svg?branch=dev)](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml)
 * [Developmental Deployment](https://is219-final-project-dev.herokuapp.com/)
 
 ## Setting up CI/CD
