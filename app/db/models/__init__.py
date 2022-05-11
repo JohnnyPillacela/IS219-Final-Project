@@ -62,6 +62,39 @@ class Location(db.Model, SerializerMixin):
         }
 
 
+class Cars(db.Model, SerializerMixin):
+    __tablename__ = 'cars'
+    id = db.Column(db.Integer, primary_key=True)
+    car_maker = db.Column(db.String(200), nullable=False)
+    model = db.Column(db.String(200), nullable=False)
+    year = db.Column(db.String(200), nullable=False)
+    price = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False, unique=True)
+    image_link = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, car_maker, model, year, price, description, image_link):
+        self.car_maker = car_maker
+        self.model = model
+        self.year = year
+        self.price = price
+        self.description = description
+        self.image_link = image_link
+
+    def get_id(self):
+        return self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'car_maker': self.car_maker,
+            'model': self.model,
+            'year': self.year,
+            'price': self.price,
+            'description': self.description,
+            'image_link': self.image_link
+        }
+
+
 class products(db.Model, SerializerMixin):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)

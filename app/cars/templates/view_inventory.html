@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    {#    {% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}#}
+    {% from 'bootstrap5/table.html' import render_table %}
+
+    <div class="row">
+        <article class="col-12">
+            <h1>Welcome</h1>
+            <h4>Cars available in our dealership</h4>
+        </article>
+
+        {% for car in data %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" style="height: 15rem;object-fit: contain" src="{{ car.image_link }}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Model:</b> {{ car.model }}</h5>
+                    <p class="card-text"><b>Car Make:</b> {{ car.car_maker }}</p>
+                    <p class="card-text"><b>Year:</b> {{ car.year }}</p>
+                    <p class="card-text"><b>Price:</b> {{ car.price }}</p>
+                    <p class="card-text"><b>Description:</b> {{ car.description }}</p>
+                    {#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from urllib import request
 
 import pytest
 from flask_login import current_user
-from app.db.models import User
+from app.db.models import User, products, Cars
 
 from app.db import db
 from app import create_app
@@ -11,29 +11,11 @@ from flask import g
 from flask import session
 import app
 
-# from conftest import application
-
 """Tests for Project 2"""
 test_email = "tobedeleted@tobedeleted.com"
 test_password = "Password123"
 
 
-# def test_bad_password_login(client):
-#     register = client.post("/register",
-#                            data={"email": "user_to_be_delete@delete.org", "password": "test1234",
-#                                  "confirm": "test1234"},
-#                            follow_redirects=True)
-#     response = client.post("/login", data={"email": "user_to_be_delete@delete.org", "password": "test12345"},
-#                            follow_redirects=True)
-#     assert response.status_code == 200
-#     assert 'b"Invalid username or password"' in response.data
-#     with application.app_context():
-#         client.post("/login",
-#                     data={"email": "admin@admin.com", "password": "Admin123", "confirm": "Admin123"},
-#                     follow_redirects=True)
-#         user_to_delete = User.query.filter_by(email="user_to_be_delete@delete.org").first()
-#         response = client.post("/users/" + str(user_to_delete.get_id()) + "/delete", follow_redirects=True)
-#         assert response.status_code == 200
 @pytest.mark.parametrize(
     ("email", "password", "message"),
     (("j@j.com", "sdgfhkjnsdf", b"Invalid username or password"),
@@ -43,6 +25,7 @@ def test_bad_password_login(client, email, password, message):
     response = client.post("/login", data={"email": email, "password": password}, follow_redirects=True)
     assert response.status_code == 200
     assert message in response.data
+
 
 @pytest.mark.parametrize(
     ("email", "password", "message"),
@@ -100,7 +83,7 @@ def test_already_registered(client):
 
 def test_successful_login(client):
     client.post("/register", data=dict(email=test_email, password=test_password, confirm=test_password),
-                           follow_redirects=True)
+                follow_redirects=True)
     response = client.post("/login", data={"email": test_email, "password": test_password}, follow_redirects=True)
     assert response.status_code == 200
     assert b"Welcome" in response.data
@@ -132,3 +115,31 @@ def test_dashboard_access_for_logged_users(client):
                 follow_redirects=True)
     response = client.post("/dashboard", follow_redirects=True)
     assert response.status_code == 405
+
+
+def test_menu_links(client):
+    """This makes the index page"""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b'href="/about"' in response.data
+    assert b'href="/login"' in response.data
+    assert b'href="/register"' in response.data
+
+
+def test_adding_cars(application):
+    with application.app_context():
+        assert db.session.query(Cars).count() == 0
+
+        # showing how to add a record
+        # create a record
+        car = Cars('Ford', 'Focus', "2020", '187893', 'car', 'img')
+        # add it to get ready to be committed
+        db.session.add(car)
+        # call the commit
+        # db.session.commit()
+        # assert that we now have a new user
+        # assert db.session.query(products).count() == 1
+        # finding one user record by email
+        car = Cars.query.filter_by(car_maker='Ford').first()
+        # asserting that the car_maker retrieved is correct
+        assert car.car_maker == "Ford"

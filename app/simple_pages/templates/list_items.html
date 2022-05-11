@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+    {#    {% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}#}
+    {% from 'bootstrap5/table.html' import render_table %}
+
+    <div class="row">
+        <article class="col-12">
+            <h1>Welcome</h1>
+            <h4>Your Products</h4>
+
+            {{ render_table(
+            data,
+            show_actions=True,
+            table_classes='table-striped',
+            header_classes='thead-dark',
+            responsive=True,
+            responsive_class='table-responsive-sm',
+            model=products,
+            new_url=add_url) }}
+
+        </article>
+{#        <table class="table">#}
+{#            <thead>#}
+{#            <tr>#}
+{#                <th scope="col">#</th>#}
+{#                <th scope="col">Name</th>#}
+{#                <th scope="col">Description</th>#}
+{#                <th scope="col">Price</th>#}
+{#                <th scope="col">Comments</th>#}
+{#                <th scope="col">Image</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{##}
+{#            {% for product in data %}#}
+                {#            <p>{{ product.filename }}</p>#}
+                {#            <img src="{{ product.filename }}">#}
+{#                <tr>#}
+{#                    <td>#}
+{#                        {{ product.id }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ product.name }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ product.description }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ product.price }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ product.comments }}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {{ product.filename }}#}
+                        {#                        <img src="{{ product.filename }}">#}
+{#                    </td>#}
+{#                </tr>#}
+{##}
+{#            {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+
+    </div>
+{% endblock %}
