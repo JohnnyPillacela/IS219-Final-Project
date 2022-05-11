@@ -141,5 +141,5 @@ def test_adding_cars(application):
         # assert db.session.query(products).count() == 1
         # finding one user record by email
         car = Cars.query.filter_by(car_maker='Ford').first()
-        # asserting that the user retrieved is correct
+        # asserting that the car_maker retrieved is correct
         assert car.car_maker == "Ford"
