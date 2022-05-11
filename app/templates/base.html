@@ -3,7 +3,6 @@
 <head>
 
 
-
     {% block head %}
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -16,7 +15,7 @@
 
         <title>My Site - {% block title %}{% endblock %}</title>
 
-	        <script type="text/javascript" src="../static/scripts.js"></script>
+        <script type="text/javascript" src="../static/scripts.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
     {% endblock %}
@@ -45,7 +44,9 @@
                         {% endif %}
                         {{ render_nav_item('map.map_locations','Map' ) }}
                         {{ render_nav_item('simple_pages.about','About') }}
-                        {{ render_nav_item('simple_pages.browse_products','Shop') }}
+                        {{ render_nav_item('simple_pages.browse_products','List Items') }}
+                        {{ render_nav_item('simple_pages.view_products','View Shop') }}
+
 
                     </div>
                 </div>
@@ -64,9 +65,12 @@
                                 {% if current_user.is_admin %}
 
 
-                                    <li><a class="dropdown-item" href="{{ url_for("auth.browse_users") }}">User Mgmt</a></li>
-                                    <li><a class="dropdown-item" href="{{ url_for("songs.songs_browse") }}">Song Mgmt</a></li>
-                                    <li><a class="dropdown-item" href="{{ url_for("map.browse_locations_datatables") }}">Loc Mgmt(dt)</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for("auth.browse_users") }}">User Mgmt</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ url_for("songs.songs_browse") }}">Song
+                                        Mgmt</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ url_for("map.browse_locations_datatables") }}">Loc Mgmt(dt)</a></li>
 
 
                                 {% endif %}
