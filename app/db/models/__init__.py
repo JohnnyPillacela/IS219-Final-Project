@@ -6,25 +6,25 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import db
 from flask_login import UserMixin
 from sqlalchemy_serializer import SerializerMixin
+
 Base = declarative_base()
 
 location_user = db.Table('location_user', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('location_id', db.Integer, db.ForeignKey('locations.id'))
-)
+                         db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                         db.Column('location_id', db.Integer, db.ForeignKey('locations.id'))
+                         )
 song_user = db.Table('song_user', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('song_id', db.Integer, db.ForeignKey('songs.id'))
-)
+                     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                     db.Column('song_id', db.Integer, db.ForeignKey('songs.id'))
+                     )
 
-user_product=db.Table('user_product', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('product_id', db.Integer, db.ForeignKey('products.id'))
-                      )
+user_product = db.Table('user_product', db.Model.metadata,
+                        db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                        db.Column('product_id', db.Integer, db.ForeignKey('products.id'))
+                        )
 
 
-
-class Song(db.Model,SerializerMixin):
+class Song(db.Model, SerializerMixin):
     __tablename__ = 'songs'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=True, unique=False)
@@ -47,7 +47,6 @@ class Location(db.Model, SerializerMixin):
     latitude = db.Column(db.String(300), nullable=True, unique=False)
     population = db.Column(db.Integer, nullable=True, unique=False)
 
-
     def __init__(self, title, longitude, latitude, population):
         self.title = title
         self.longitude = longitude
@@ -62,18 +61,24 @@ class Location(db.Model, SerializerMixin):
             'population': self.population,
         }
 
-class products(db.Model,SerializerMixin):
+
+class products(db.Model, SerializerMixin):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String(200), nullable=False)
-    description=db.Column(db.String(200), nullable=False)
-    price=db.Column(db.String(200), nullable=False)
-    comments=db.Column(db.String(200), nullable=False)
-    filename=db.Column(db.Text, nullable=False, unique=True)
-    email=db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    price = db.Column(db.String(200), nullable=False)
+    comments = db.Column(db.String(200), nullable=False)
+    filename = db.Column(db.Text, nullable=False, unique=True)
+    email = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, name):
-        self.name=name
+    def __init__(self, name, description, price, comments, filename, email):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.comments = comments
+        self.filename = filename
+        self.email = email
 
     def serialize(self):
         return {
@@ -81,8 +86,8 @@ class products(db.Model,SerializerMixin):
             'description': self.description,
             'price': self.price,
             'comments': self.comments,
-            'filename':self.filename,
-            'email':self.email
+            'filename': self.image,
+            'email': self.email
         }
 
 
@@ -96,11 +101,11 @@ class User(UserMixin, db.Model):
     registered_on = db.Column('registered_on', db.DateTime)
     active = db.Column('is_active', db.Boolean(), nullable=False, server_default='1')
     is_admin = db.Column('is_admin', db.Boolean(), nullable=False, server_default='0')
-    #songs = db.relationship("Song", back_populates="user", cascade="all, delete")
+    # songs = db.relationship("Song", back_populates="user", cascade="all, delete")
     locations = db.relationship("Location",
-                    secondary=location_user, backref="users")
+                                secondary=location_user, backref="users")
     songs = db.relationship("Song",
-                    secondary=song_user, backref="users")
+                            secondary=song_user, backref="users")
 
     def __init__(self, email, password, is_admin):
         self.email = email
