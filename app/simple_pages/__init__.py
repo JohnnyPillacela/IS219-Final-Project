@@ -8,7 +8,8 @@ from app.db.models import products
 from app.simple_pages.forms import create_product_form
 
 simple_pages = Blueprint('simple_pages', __name__,
-                        template_folder='templates')
+                         template_folder='templates')
+
 
 
 @simple_pages.route('/')
@@ -18,6 +19,7 @@ def index():
     except TemplateNotFound:
         abort(404)
 
+
 @simple_pages.route('/about')
 def about():
     try:
@@ -25,13 +27,13 @@ def about():
     except TemplateNotFound:
         abort(404)
 
+
 @simple_pages.route('/welcome')
 def welcome():
     try:
         return render_template('welcome.html')
     except TemplateNotFound:
         abort(404)
-
 
 
 @simple_pages.route('/products')
@@ -42,14 +44,27 @@ def browse_products():
     titles = [('Product id', 'id')]
     add_url = url_for('simple_pages.add_product')
 
+    current_app.logger.info("Browse page loading")
+
+    return render_template('welcome.html',
+                           data=data,
+                           Products=products,
+                           add_url=add_url,
+                           record_type="products")
+
+@simple_pages.route('/view_products')
+def view_products():
+    data = products.query.all()
+    titles = [('Product id', 'id')]
+    add_url = url_for('simple_pages.add_product')
 
     current_app.logger.info("Browse page loading")
 
-    return render_template('browse.html', titles=titles, add_url=add_url,
-                            data=data, products=products, record_type="products")
-
-
-
+    return render_template('view_products.html',
+                           data=data,
+                           Products=products,
+                           add_url=add_url,
+                           record_type="products")
 
 
 @simple_pages.route('/products/new', methods=['GET', 'POST'])
@@ -57,16 +72,19 @@ def browse_products():
 def add_product():
     form = create_product_form()
     if form.validate_on_submit():
-        name =products.query.filter_by(name=form.name.data).first()
+        name = products.query.filter_by(name=form.name.data).first()
         if name is None:
-            product = products(name=form.name.data, description=form.description.data,
-                                price=form.price.data, comments=form.comments.data, filename=form.filename.data)
-            db.session.add(product)
+            prod = products(name=form.name.data,
+                               description=form.description.data,
+                               price=form.price.data,
+                               comments=form.comments.data,
+                               filename=form.filename.data,
+                                email=form.email.data)
+            db.session.add(prod)
             db.session.commit()
             flash('Congratulations, you just created a product', 'success')
             return redirect(url_for('simple_pages.browse_products'))
         else:
             flash('new product')
             return redirect(url_for('simple_pages.browse_products'))
-    return render_template('welcome.html', form=form)
-
+    return render_template('add_product.html', form=form)
