@@ -75,7 +75,7 @@ def logout():
     db.session.add(user)
     db.session.commit()
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('simple_pages.index'))
 
 
 
