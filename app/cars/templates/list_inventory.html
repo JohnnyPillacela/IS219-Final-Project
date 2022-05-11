@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    {#    {% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}#}
+    {% from 'bootstrap5/table.html' import render_table %}
+
+    <div class="row">
+        <article class="col-12">
+            <h1>Welcome, Mr Manager</h1>
+            <h4>Cars In this Dealer</h4>
+
+            {{ render_table(
+            data,
+            show_actions=True,
+            table_classes='table-striped',
+            header_classes='thead-dark',
+            responsive=True,
+            responsive_class='table-responsive-sm',
+            model=Cars,
+            new_url=add_url) }}
+
+        </article>
+
+    </div>
+{% endblock %}
