@@ -21,3 +21,12 @@ class create_car_form(FlaskForm):
                                [validators.DataRequired(), ],
                                description="Add an image to your Car")
     submit = SubmitField()
+
+
+class edit_car_form(FlaskForm):
+    price = TextAreaField('Price',
+                          [validators.DataRequired(), ],
+                          description="You need to update the car price")
+    description = TextAreaField('Description',
+                                description="Add any description of the car")
+    submit = SubmitField()

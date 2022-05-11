@@ -12,6 +12,7 @@ class edit_location_form(FlaskForm):
                                description="You need to signup with a population")
     submit = SubmitField()
 
+
 class create_location_form(FlaskForm):
     title = TextAreaField('Location Name',
                           [validators.DataRequired(), ],
@@ -27,8 +28,6 @@ class create_location_form(FlaskForm):
                                description="You need to signup with a population")
     # is_admin = BooleanField('Admin', render_kw={'value':'1'})
     submit = SubmitField()
-
-
 
 
 class csv_upload(FlaskForm):

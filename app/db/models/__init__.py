@@ -80,8 +80,12 @@ class Cars(db.Model, SerializerMixin):
         self.description = description
         self.image_link = image_link
 
+    def get_id(self):
+        return self.id
+
     def serialize(self):
         return {
+            'id': self.id,
             'car_maker': self.car_maker,
             'model': self.model,
             'year': self.year,
