@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 from app.auth.decorators import admin_required
 from app.auth.forms import login_form, register_form, profile_form, security_form, user_edit_form, create_user_form
 from app.db import db
+from app.cars import cars
 from app.db.models import User, Location, location_user
 
 auth = Blueprint('auth', __name__, template_folder='templates')
@@ -60,7 +61,7 @@ def login():
                     db.session.commit()
                 login_user(user)
                 flash("Welcome", 'success')
-                return redirect(url_for('auth.dashboard'))
+                return redirect(url_for('cars.browse_cars'))
         else:
             flash('Invalid username or password')
     return render_template('login.html', form=form)
