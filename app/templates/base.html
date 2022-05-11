@@ -8,10 +8,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{#        {% block styles %}#}
-{#            <!-- Bootstrap CSS -->#}
-{#            {{ bootstrap.load_css() }}#}
-{#        {% endblock %}#}
+        {#        {% block styles %}#}
+        {#            <!-- Bootstrap CSS -->#}
+        {#            {{ bootstrap.load_css() }}#}
+        {#        {% endblock %}#}
 
         <title>My Site - {% block title %}{% endblock %}</title>
 
@@ -46,12 +46,12 @@
                         {% else %}
                             {{ render_nav_item('simple_pages.index', 'Home') }}
                         {% endif %}
-                        {{ render_nav_item('map.map_locations','Map' ) }}
+                        {{ render_nav_item('map.map_locations','Dealerships' ) }}
                         {{ render_nav_item('simple_pages.about','About') }}
-                        {{ render_nav_item('simple_pages.view_products','View Shop') }}
-                        {% if current_user.is_admin %}
-                            {{ render_nav_item('simple_pages.browse_products','List Items') }}
-                        {% endif %}
+{#                        {{ render_nav_item('simple_pages.view_products','View Shop') }}#}
+{#                        {% if current_user.is_admin %}#}
+{#                            {{ render_nav_item('simple_pages.browse_products','List Items') }}#}
+{#                        {% endif %}#}
                         {{ render_nav_item('cars.browse_cars','View Inventory') }}
                         {% if current_user.is_admin %}
                             {{ render_nav_item('cars.list_cars','Cars List') }}
@@ -73,17 +73,13 @@
                                     Account</a></li>
                                 {% if current_user.is_admin %}
 
-
                                     <li><a class="dropdown-item" href="{{ url_for("auth.browse_users") }}">User Mgmt</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="{{ url_for("songs.songs_browse") }}">Song
-                                        Mgmt</a></li>
                                     <li><a class="dropdown-item"
                                            href="{{ url_for("map.browse_locations_datatables") }}">Loc Mgmt(dt)</a></li>
 
-
                                 {% endif %}
-                                <li><a class="dropdown-item" href="{{ url_for("auth.logout") }}">Logout</a></li>
+                                <li><a class="dropdown-item " href="{{ url_for("auth.logout") }}">Logout</a></li>
                             </ul>
                         </li>
                     {% else %}
@@ -118,6 +114,6 @@
 <footer class="text-center mt-5">
     Environment: {{ deployment_environment }} - Copyright: {{ year }}
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>#}
 </body>
 </html>
