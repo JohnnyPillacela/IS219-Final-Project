@@ -1,3 +1,4 @@
+import sqlite3
 from urllib import request
 
 import pytest
@@ -18,6 +19,14 @@ from tests.click_test import runner
 """Tests for Project 2"""
 test_email = "tobedeleted@tobedeleted.com"
 test_password = "Password123"
+
+car_maker = "Ford"
+model = "Focus"
+year = "2020"
+price = "12321"
+description = "car"
+img = "http"
+vin = "345"
 
 
 # Test 1
@@ -222,13 +231,57 @@ def test_create_database():
 
 
 # Test 18
-def test_deleting_car(application):
-    with application.app_context():
-        assert db.session.query(Cars).count() == 0
-        car = Cars('Ford', 'Focus', "2020", '187893', 'car', 'img')
-        # add it to get ready to be committed
-        db.session.add(car)
-        car = Cars.query.filter_by(car_maker='Ford').first()
-        # asserting that the car_maker retrieved is correct
-        assert car.car_maker == "Ford"
+def test_make_insert():
+    fields = ['email', 'password', 'is_admin']
+    actual = User(fields, 'users', 1)
+    expected = 'INSERT INTO users(email, password, is_admin) VALUES (sample@sample.com, Sample123, 1)'
+    assert (expected, actual)
 
+
+# Test 19
+def test_add_car(application, client):
+    client.post("/register",
+                data={"email": test_email, "password": test_password,
+                      "confirm": test_password},
+                follow_redirects=True)
+    client.post("/login", data={"email": test_email, "password": test_password}, follow_redirects=True)
+    response = client.post("/car/new", data={"car_maker": car_maker, "model": model, "year": year, "price": price,
+                                             "description": description, "image_link": img, "vin": vin},
+                           follow_redirects=True)
+    print(response.data)
+    assert b'Congratulations, you just added a new car' in response.data
+
+
+# Test 20
+def test_delete_car(application):
+    application.test_client_class = FlaskLoginClient
+    user = User('admin@admin.com', 'Admin123', 1)
+    car = Cars(car_maker, model, year, price, description, img, vin)
+    db.session.add(user)
+    db.session.add(car)
+    db.session.commit()
+
+    assert user.email == 'admin@admin.com'
+    assert db.session.query(User).count() == 1
+    assert db.session.query(Cars).count() == 1
+
+    with application.test_client(user=user) as client:
+        response = client.get('/car/1/delete', follow_redirects=True)
+        assert b'Car Deleted' in response.data
+
+# Test 21
+def test_edit_car(application):
+    application.test_client_class = FlaskLoginClient
+    user = User('admin@admin.com', 'Admin123', 1)
+    car = Cars(car_maker, model, year, price, description, img, vin)
+    db.session.add(user)
+    db.session.add(car)
+    db.session.commit()
+
+    assert user.email == 'admin@admin.com'
+    assert db.session.query(User).count() == 1
+    assert db.session.query(Cars).count() == 1
+
+    with application.test_client(user=user) as client:
+        response = client.post('/car/1/edit', data={"price": "123", "description": "updated description"}, follow_redirects=True)
+        assert b'Car Edited Successfully' in response.data
