@@ -197,12 +197,21 @@ def test_edit_location(application):
 
     with application.test_client(user=user) as client:
         response = client.post('/locations/1/edit',
-                              data={"title": "tite", "population": "poplation"},
-                              follow_redirects=True)
+                               data={"title": "tite", "population": "poplation"},
+                               follow_redirects=True)
         assert b'Location Edited Successfully' in response.data
 
-
 # Test 15
+def test_adding_location(application):
+    with application.app_context():
+        assert db.session.query(Location).count() == 0
+        location = Location('title', 35, 22, 250)
+        db.session.add(location)
+        location = Location.query.filter_by(title='title').first()
+        assert location.title == 'title'
+
+
+# Test 16
 def test_deny_dashboard(application):
     application.test_client_class = FlaskLoginClient
     assert db.session.query(User).count() == 0
@@ -211,7 +220,7 @@ def test_deny_dashboard(application):
         assert response.status_code == 302
 
 
-# Test 16
+# Test 17
 def test_menu_links(client):
     """This makes the index page"""
     response = client.get("/")
@@ -221,7 +230,7 @@ def test_menu_links(client):
     assert b'href="/register"' in response.data
 
 
-# Test 17
+# Test 18
 def test_push_car_to_db(application):
     with application.app_context():
         assert db.session.query(Cars).count() == 0
@@ -231,7 +240,7 @@ def test_push_car_to_db(application):
         assert car.car_maker == "Ford"
 
 
-# Test 18
+# Test 19
 def test_create_database():
     response = runner.invoke(create_database)
     assert response.exit_code == 0
@@ -240,7 +249,7 @@ def test_create_database():
     assert os.path.exists(dir) == True
 
 
-# Test 19
+# Test 20
 def test_make_insert():
     fields = ['email', 'password', 'is_admin']
     actual = User(fields, 'users', 1)
@@ -248,7 +257,7 @@ def test_make_insert():
     assert (expected, actual)
 
 
-# Test 20
+# Test 21
 def test_admin_can_add_car(application, client):
     client.post("/register",
                 data={"email": test_email, "password": test_password,
@@ -261,7 +270,7 @@ def test_admin_can_add_car(application, client):
     assert b'Congratulations, you just added a new car' in response.data
 
 
-# Test 21
+# Test 22
 def test_delete_car(application):
     application.test_client_class = FlaskLoginClient
     user = User('admin@admin.com', 'Admin123', 1)
@@ -279,7 +288,7 @@ def test_delete_car(application):
         assert b'Car Deleted' in response.data
 
 
-# Test 22
+# Test 23
 def test_edit_car(application):
     application.test_client_class = FlaskLoginClient
     user = User('admin@admin.com', 'Admin123', 1)
@@ -298,7 +307,7 @@ def test_edit_car(application):
         assert b'Car Edited Successfully' in response.data
 
 
-# Test 23
+# Test 24
 def test_view_car_inventory(application):
     application.test_client_class = FlaskLoginClient
     user = User('admin@admin.com', 'Admin123', 1)
@@ -316,7 +325,7 @@ def test_view_car_inventory(application):
         assert b'Cars available in our dealership' in response.data
 
 
-# Test 24
+# Test 25
 def test_duplicate_car_vin(application):
     application.test_client_class = FlaskLoginClient
     user = User('admin@admin.com', 'Admin123', 1)
@@ -335,17 +344,3 @@ def test_duplicate_car_vin(application):
                                follow_redirects=True)
         assert b'Car with that VIN Number is already listed' in response.data
 
-
-# Test 25
-def test_user_logout(application):
-    application.test_client_class = FlaskLoginClient
-    user = User('admin@admin.com', 'Admin123', 1)
-    db.session.add(user)
-    db.session.commit()
-
-    assert user.email == 'admin@admin.com'
-    assert db.session.query(User).count() == 1
-
-    with application.test_client(user=user) as client:
-        response = client.post("/logout", follow_redirects=True)
-        assert b'' in response.data
