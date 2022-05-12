@@ -20,6 +20,9 @@ class create_car_form(FlaskForm):
     image_link = TextAreaField('Link to Car Image',
                                [validators.DataRequired(), ],
                                description="Add an image to your Car")
+    vin = TextAreaField('Vehicle Identification Number',
+                        [validators.DataRequired(), ],
+                        description="PLease Add the Car's Vin Number")
     submit = SubmitField()
 
 
