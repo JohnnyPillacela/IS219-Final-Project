@@ -12,18 +12,15 @@ cars = Blueprint('cars', __name__,
                  template_folder='templates')
 
 
-@cars.route('/view_inventory')
+@cars.route('/view_inventory', methods=['GET'])
 def browse_cars():
     data = Cars.query.all()
-    titles = [('Product id', 'id')]
-    add_url = url_for('cars.add_car')
 
     current_app.logger.info("Browse page loading")
 
     return render_template('view_inventory.html',
                            data=data,
                            Cars=Cars,
-                           add_url=add_url,
                            record_type="products")
 
 

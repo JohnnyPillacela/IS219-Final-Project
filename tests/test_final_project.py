@@ -183,12 +183,6 @@ def test_dashboard_access(application):
         assert response.status_code == 200
 
 
-# def test_deny_dashboard(application):
-#     assert db.session.query(User).count() == 0
-#     with application.test_client() as client:
-#         response = client.get('/dashboard')
-#         assert response.status_code == 302
-
 # Test 14
 def test_edit_location(application):
     application.test_client_class = FlaskLoginClient
@@ -343,20 +337,15 @@ def test_duplicate_car_vin(application):
 
 
 # Test 25
-def test_duplicate_car_vn(application):
+def test_user_logout(application):
     application.test_client_class = FlaskLoginClient
     user = User('admin@admin.com', 'Admin123', 1)
-    car1 = Cars(car_maker, model, year, price, description, img, vin)
     db.session.add(user)
-    db.session.add(car1)
     db.session.commit()
 
     assert user.email == 'admin@admin.com'
     assert db.session.query(User).count() == 1
-    assert db.session.query(Cars).count() == 1
 
     with application.test_client(user=user) as client:
-        response = client.post("/car/new", data={"car_maker": car_maker, "model": model, "year": year, "price": price,
-                                                 "description": description, "image_link": img, "vin": vin},
-                               follow_redirects=True)
-        assert b'Car with that VIN Number is already listed' in response.data
+        response = client.post("/logout", follow_redirects=True)
+        assert b'' in response.data

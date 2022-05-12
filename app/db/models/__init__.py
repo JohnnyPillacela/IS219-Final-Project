@@ -87,7 +87,6 @@ class Cars(db.Model, SerializerMixin):
 
     def serialize(self):
         return {
-            'id': self.id,
             'car_maker': self.car_maker,
             'model': self.model,
             'year': self.year,
