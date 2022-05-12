@@ -1,10 +1,16 @@
-# Project Setup
+# IS 219 Final Project - Johnny's Car Dealership
 
 [![Production Workflow](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/prod.yml/badge.svg?branch=master)](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/prod.yml)
 * [Production Deployment](https://is219-final-project.herokuapp.com/)
 
 [![Development Workflow](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml/badge.svg?branch=dev)](https://github.com/JohnnyPillacela/IS219-Final-Project/actions/workflows/dev.yml)
 * [Developmental Deployment](https://is219-final-project-dev.herokuapp.com/)
+
+## Purpose 
+My web application can show users
+ - our dealership locations with a map
+ - cars currently in our inventory
+ - users can sell their cars to me, the dealership
 
 ## Setting up CI/CD
 
