@@ -51,7 +51,8 @@ def add_car():
                    year=form.year.data,
                    price=form.price.data,
                    description=form.description.data,
-                   image_link=form.image_link.data)
+                   image_link=form.image_link.data,
+                   vin=form.vin.data)
         db.session.add(car)
         db.session.commit()
         flash('Congratulations, you just added a new car', 'success')
@@ -76,7 +77,7 @@ def delete_car(car_id):
 @cars.route('/car/<int:car_id>/edit', methods=['POST', 'GET'])
 @login_required
 @admin_required
-def edit_location(car_id):
+def edit_car(car_id):
     car = Cars.query.get(car_id)
     form = edit_car_form(obj=car)
     if form.validate_on_submit():

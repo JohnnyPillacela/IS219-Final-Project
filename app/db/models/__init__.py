@@ -71,14 +71,16 @@ class Cars(db.Model, SerializerMixin):
     price = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False, unique=True)
     image_link = db.Column(db.String(50), nullable=False)
+    vin = db.Column(db.String(50), nullable=False, unique=True)
 
-    def __init__(self, car_maker, model, year, price, description, image_link):
+    def __init__(self, car_maker, model, year, price, description, image_link, vin):
         self.car_maker = car_maker
         self.model = model
         self.year = year
         self.price = price
         self.description = description
         self.image_link = image_link
+        self.vin = vin
 
     def get_id(self):
         return self.id
@@ -91,7 +93,8 @@ class Cars(db.Model, SerializerMixin):
             'year': self.year,
             'price': self.price,
             'description': self.description,
-            'image_link': self.image_link
+            'image_link': self.image_link,
+            'vin': self.vin
         }
 
 
